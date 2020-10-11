@@ -1,0 +1,35 @@
+os:
+  - linux
+language: node_js
+node_js:
+  - "12"
+cache:
+  yarn: true
+  directories:
+    - node_modules
+notifications:
+  email: false
+services:
+  - docker
+env:
+  global:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=password
+    - PGPORT=7777
+    - PGDATABASE=mutation_example
+    - PGHOST=localhost
+    - PGPASSWORD=password
+    - PGUSER=postgres
+    - TEST_DATABASE_URL=postgres://localhost:7777/graphile_test
+
+before_install:
+  - yarn install
+  - docker run -d -p 7777:5432 --name postgres pyramation/postgres
+  - sleep 3
+  - while ! docker exec -it postgres pg_isready -U postgres -h 127.0.0.1; do echo "$(date) - waiting for database to start"; sleep 1; done
+  - createdb graphile_test
+  - psql -f __tests__/schema.sql graphile_test
+
+script:
+  - yarn install
+  - yarn test

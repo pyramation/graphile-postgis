@@ -1,22 +1,22 @@
-const plugin = builder => {
-  builder.hook("build", build => {
+const plugin = (builder) => {
+  builder.hook('build', (build) => {
     const { pgIntrospectionResultsByKind: introspectionResultsByKind } = build;
     const pgGISExtension = introspectionResultsByKind.extension.find(
-      (e) => e.name === "postgis"
+      (e) => e.name === 'postgis'
     );
     // Check we have the postgis extension
     if (!pgGISExtension) {
-      debug("PostGIS extension not found in database; skipping");
+      console.warn('PostGIS extension not found in database; skipping');
       return build;
     }
     // Extract the geography and geometry types
     const pgGISGeometryType = introspectionResultsByKind.type.find(
       (t) =>
-        t.name === "geometry" && t.namespaceId === pgGISExtension.namespaceId
+        t.name === 'geometry' && t.namespaceId === pgGISExtension.namespaceId
     );
     const pgGISGeographyType = introspectionResultsByKind.type.find(
       (t) =>
-        t.name === "geography" && t.namespaceId === pgGISExtension.namespaceId
+        t.name === 'geography' && t.namespaceId === pgGISExtension.namespaceId
     );
     if (!pgGISGeographyType || !pgGISGeometryType) {
       throw new Error(
@@ -28,7 +28,7 @@ const plugin = builder => {
       pgGISGraphQLInterfaceTypesByType: {},
       pgGISGeometryType,
       pgGISGeographyType,
-      pgGISExtension,
+      pgGISExtension
     });
   });
 };

@@ -1,17 +1,15 @@
-import PostgisVersionPlugin from "./PostgisVersionPlugin";
-import PostgisInflectionPlugin from "./PostgisInflectionPlugin";
-import PostgisExtensionDetectionPlugin from "./PostgisExtensionDetectionPlugin";
-import PostgisRegisterTypesPlugin from "./PostgisRegisterTypesPlugin";
-import Postgis_Point_LatitudeLongitudePlugin from "./Postgis_Point_LatitudeLongitudePlugin";
-import Postgis_GeometryCollection_GeometriesPlugin from "./Postgis_GeometryCollection_GeometriesPlugin";
-import Postgis_LineString_PointsPlugin from "./Postgis_LineString_PointsPlugin";
-import Postgis_Polygon_RingsPlugin from "./Postgis_Polygon_RingsPlugin";
-import Postgis_MultiPoint_PointsPlugin from "./Postgis_MultiPoint_PointsPlugin";
-import Postgis_MultiLineString_LineStringsPlugin from "./Postgis_MultiLineString_LineStringsPlugin";
-import Postgis_MultiPolygon_PolygonsPlugin from "./Postgis_MultiPolygon_PolygonsPlugin";
+import PostgisInflectionPlugin from './PostgisInflectionPlugin';
+import PostgisExtensionDetectionPlugin from './PostgisExtensionDetectionPlugin';
+import PostgisRegisterTypesPlugin from './PostgisRegisterTypesPlugin';
+import Postgis_Point_LatitudeLongitudePlugin from './Postgis_Point_LatitudeLongitudePlugin';
+import Postgis_GeometryCollection_GeometriesPlugin from './Postgis_GeometryCollection_GeometriesPlugin';
+import Postgis_LineString_PointsPlugin from './Postgis_LineString_PointsPlugin';
+import Postgis_Polygon_RingsPlugin from './Postgis_Polygon_RingsPlugin';
+import Postgis_MultiPoint_PointsPlugin from './Postgis_MultiPoint_PointsPlugin';
+import Postgis_MultiLineString_LineStringsPlugin from './Postgis_MultiLineString_LineStringsPlugin';
+import Postgis_MultiPolygon_PolygonsPlugin from './Postgis_MultiPolygon_PolygonsPlugin';
 
 const PostgisPlugin = async (builder, options) => {
-  await PostgisVersionPlugin(builder, options);
   await PostgisInflectionPlugin(builder, options);
   await PostgisExtensionDetectionPlugin(builder, options);
   await PostgisRegisterTypesPlugin(builder, options);

@@ -1,7 +1,7 @@
-import { SUBTYPE_STRING_BY_SUBTYPE } from "./constants";
+import { SUBTYPE_STRING_BY_SUBTYPE } from './constants';
 
-const plugin = builder => {
-  builder.hook("inflection", inflection => {
+const plugin = (builder) => {
+  builder.hook('inflection', (inflection) => {
     return {
       ...inflection,
       gisType(type, subtype, hasZ, hasM) {
@@ -9,11 +9,11 @@ const plugin = builder => {
           [
             type.name,
             SUBTYPE_STRING_BY_SUBTYPE[subtype],
-            hasZ ? "z" : null,
-            hasM ? "m" : null,
+            hasZ ? 'z' : null,
+            hasM ? 'm' : null
           ]
-            .filter(_ => _)
-            .join("-")
+            .filter((_) => _)
+            .join('-')
         );
       },
       gisInterfaceName(type) {
@@ -24,25 +24,25 @@ const plugin = builder => {
           [
             type.name,
             SUBTYPE_STRING_BY_SUBTYPE[0],
-            hasZ ? "z" : null,
-            hasM ? "m" : null,
+            hasZ ? 'z' : null,
+            hasM ? 'm' : null
           ]
-            .filter(_ => _)
-            .join("-")
+            .filter((_) => _)
+            .join('-')
         );
       },
       geojsonFieldName() {
         return `geojson`;
       },
       gisXFieldName(type) {
-        return type.name === "geography" ? "longitude" : "x";
+        return type.name === 'geography' ? 'longitude' : 'x';
       },
       gisYFieldName(type) {
-        return type.name === "geography" ? "latitude" : "y";
+        return type.name === 'geography' ? 'latitude' : 'y';
       },
       gisZFieldName(type) {
-        return type.name === "geography" ? "height" : "z";
-      },
+        return type.name === 'geography' ? 'height' : 'z';
+      }
     };
   });
 };

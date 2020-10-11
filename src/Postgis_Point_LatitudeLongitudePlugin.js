@@ -1,9 +1,9 @@
-import { GIS_SUBTYPE } from "./constants";
+import { GIS_SUBTYPE } from './constants';
 
-const plugin = builder => {
-  builder.hook("GraphQLObjectType:fields", (fields, build, context) => {
+const plugin = (builder) => {
+  builder.hook('GraphQLObjectType:fields', (fields, build, context) => {
     const {
-      scope: { isPgGISType, pgGISType, pgGISTypeDetails },
+      scope: { isPgGISType, pgGISType, pgGISTypeDetails }
     } = context;
     if (
       !isPgGISType ||
@@ -15,7 +15,7 @@ const plugin = builder => {
     const {
       extend,
       graphql: { GraphQLNonNull, GraphQLFloat },
-      inflection,
+      inflection
     } = build;
     const xFieldName = inflection.gisXFieldName(pgGISType);
     const yFieldName = inflection.gisYFieldName(pgGISType);
@@ -25,13 +25,13 @@ const plugin = builder => {
         type: new GraphQLNonNull(GraphQLFloat),
         resolve(data) {
           return data.__geojson.coordinates[0];
-        },
+        }
       },
       [yFieldName]: {
         type: new GraphQLNonNull(GraphQLFloat),
         resolve(data) {
           return data.__geojson.coordinates[1];
-        },
+        }
       },
       ...(pgGISTypeDetails.hasZ
         ? {
@@ -39,10 +39,10 @@ const plugin = builder => {
               type: new GraphQLNonNull(GraphQLFloat),
               resolve(data) {
                 return data.__geojson.coordinates[2];
-              },
-            },
+              }
+            }
           }
-        : {}),
+        : {})
     });
   });
 };

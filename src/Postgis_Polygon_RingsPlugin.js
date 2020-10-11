@@ -1,10 +1,10 @@
-import { GIS_SUBTYPE } from "./constants";
-import { getGISTypeName } from "./utils";
+import { GIS_SUBTYPE } from './constants';
+import { getGISTypeName } from './utils';
 
-const plugin = builder => {
-  builder.hook("GraphQLObjectType:fields", (fields, build, context) => {
+const plugin = (builder) => {
+  builder.hook('GraphQLObjectType:fields', (fields, build, context) => {
     const {
-      scope: { isPgGISType, pgGISType, pgGISTypeDetails },
+      scope: { isPgGISType, pgGISType, pgGISTypeDetails }
     } = context;
     if (
       !isPgGISType ||
@@ -16,7 +16,7 @@ const plugin = builder => {
     const {
       extend,
       getPostgisTypeByGeometryType,
-      graphql: { GraphQLList },
+      graphql: { GraphQLList }
     } = build;
     const { hasZ, hasM, srid } = pgGISTypeDetails;
     const LineString = getPostgisTypeByGeometryType(
@@ -35,11 +35,11 @@ const plugin = builder => {
             __gisType: getGISTypeName(GIS_SUBTYPE.LineString, hasZ, hasM),
             __srid: data.__srid,
             __geojson: {
-              type: "LineString",
-              coordinates: data.__geojson.coordinates[0],
-            },
+              type: 'LineString',
+              coordinates: data.__geojson.coordinates[0]
+            }
           };
-        },
+        }
       },
       interiors: {
         type: new GraphQLList(LineString),
@@ -48,12 +48,12 @@ const plugin = builder => {
             __gisType: getGISTypeName(GIS_SUBTYPE.LineString, hasZ, hasM),
             __srid: data.__srid,
             __geojson: {
-              type: "LineString",
-              coordinates: coord,
-            },
+              type: 'LineString',
+              coordinates: coord
+            }
           }));
-        },
-      },
+        }
+      }
     });
   });
 };

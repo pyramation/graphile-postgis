@@ -24,19 +24,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-export default function makeGeoJSONType(graphql, name = "GeoJSON") {
+export default function makeGeoJSONType(graphql, name = 'GeoJSON') {
   const Kind = graphql.Kind;
-  const GraphQLScalarType =
-    graphql.GraphQLScalarType;
+  const GraphQLScalarType = graphql.GraphQLScalarType;
 
   function identity(value) {
     return value;
   }
 
-  function parseLiteral(
-    ast,
-    variables
-  ) {
+  function parseLiteral(ast, variables) {
     switch (ast.kind) {
       case Kind.STRING:
       case Kind.BOOLEAN:
@@ -47,14 +43,14 @@ export default function makeGeoJSONType(graphql, name = "GeoJSON") {
         return parseFloat(ast.value);
       case Kind.OBJECT: {
         const value = Object.create(null);
-        ast.fields.forEach(field => {
+        ast.fields.forEach((field) => {
           value[field.name.value] = parseLiteral(field.value, variables);
         });
 
         return value;
       }
       case Kind.LIST:
-        return ast.values.map(n => parseLiteral(n, variables));
+        return ast.values.map((n) => parseLiteral(n, variables));
       case Kind.NULL:
         return null;
       case Kind.VARIABLE: {
@@ -70,9 +66,9 @@ export default function makeGeoJSONType(graphql, name = "GeoJSON") {
     name,
     description:
       `The \`${name}\` scalar type represents GeoJSON values as specified by` +
-      "[RFC 7946](https://tools.ietf.org/html/rfc7946).",
+      '[RFC 7946](https://tools.ietf.org/html/rfc7946).',
     serialize: identity,
     parseValue: identity,
-    parseLiteral,
+    parseLiteral
   });
 }
